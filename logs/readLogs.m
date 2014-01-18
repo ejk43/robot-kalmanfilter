@@ -13,10 +13,10 @@ if ~exist(logDir,'dir')
     error('Supplied directory is invalid');
 end
 
-if ~exist(name_odom, 'file') ||  ...
+if ~exist(name_enc, 'file') ||  ...
    ~exist(name_gps, 'file') || ...
-   ~exist(name_enc, 'file')
-    error(['Missing file ' name_imu ' in directory ' logDir]);
+   ~exist(name_imu, 'file')
+    error(['Missing necessary file in directory ' logDir]);
 end
 
 % data.state = csvread(name_state,1,0);
@@ -25,6 +25,11 @@ end
 data.imu = csvread(name_imu,1,0);
 data.gps = csvread(name_gps,1,0);
 data.enc = csvread(name_enc,1,0);
+
+mintime = min([data.imu(:,1); data.gps(:,1); data.enc(:,1)]);
+data.imu(:,1) = data.imu(:,1)-mintime;
+data.gps(:,1) = data.gps(:,1)-mintime;
+data.enc(:,1) = data.enc(:,1)-mintime;
 
 end
 
