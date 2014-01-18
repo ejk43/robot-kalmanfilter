@@ -1,7 +1,6 @@
 
 %% Set up the path
-addpath('./../logs');
-addpath('./..');
+addpath('./../preprocessing');
 
 %% Get data
 LogDirectory = './../logs';
