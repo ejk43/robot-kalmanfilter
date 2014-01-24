@@ -1,15 +1,18 @@
-function [ vel, omg ] = convertEncodersToVelocity( time, encLeft, encRight )
+function [ vel, omg ] = convertEncodersToVelocity( time, encLeft, encRight,  settings)
+
 
 % Todo: Replace with globals
-TICKS_PER_M_RIGHT = 26500;
-TICKS_PER_M_LEFT = 27150;
-TRACK_WIDTH = 0.55;
+if nargin < 4
+    settings.tpm_right = 26500; % Ticks per meter
+    settings.tpm_left= 27150; % Ticks per meter
+	settings.track_m = 0.55; % Track Width
+end
 
-velRight = diff(encRight)/TICKS_PER_M_RIGHT./diff(time);
-velLeft = diff(encLeft)/TICKS_PER_M_LEFT./diff(time);
+velRight = diff(encRight)/settings.tpm_right./diff(time);
+velLeft = diff(encLeft)/settings.tpm_left./diff(time);
 
 vel = (velRight+velLeft)/2;
-omg = (velRight-velLeft)/TRACK_WIDTH;
+omg = (velRight-velLeft)/settings.track_m;
 
 end
 
