@@ -36,8 +36,10 @@ Q = diag([settings.sys.x^2,...
            settings.sys.y^2,...
            settings.sys.tht^2,...
            settings.sys.vel^2,...
-           settings.sys.omg^2]);
+           settings.sys.omg^2,...
+           settings.sys.imubias^2]);
 R_gps = diag([settings.std.gps^2, settings.std.gps^2]);
+R_imu = settings.std.imu^2;
 
 hist.t = data.gps(:,1);
 hist.x = zeros(nGPS, settings.kf.nStates);
@@ -56,11 +58,17 @@ for idx_gps = 2:nGPS
     
     % System Update
     [ x_pre, P_pre, Phi ] = ekf_sysm_update_basic(x, P, Q*dt, dt);
+    x_post = x_pre;
+    P_post = P_pre;
     
-    z = data.gps(idx_gps,2:3)';
-    [ x, P ] = ekf_meas_update_gps(x_pre, P_pre, z, R_gps*dt, dt, settings.robot.off_gps);
-    
-    x(3) = CoerceAngle(x(3), 2*pi);
+    z_gps = data.gps(idx_gps,2:3)';
+    [ x_post, P_post ] = ekf_meas_update_gps(x_post, P_post, z_gps, R_gps*dt, dt, settings.robot.off_gps);
+    z_imu = mean(data.imu(data.gps(idx_gps-1,1)<data.imu(:,1) & data.imu(:,1)<data.gps(idx_gps,1), 2));
+    [ x_post, P_post ] = ekf_meas_update_imu(x_post, P_post, z_imu, R_imu*dt, dt);
+    x = x_post;
+    P = P_post;
+
+    x(3) = wrap(x(3), 2*pi);
     
     hist.x(idx_gps,:) = x;
     hist.x_pre(idx_gps, :) = x_pre;
@@ -110,9 +118,13 @@ end
 
 if settings.plot
     plot_results
-    h1 = figure(100);
+    
+    h1 = figure(100); clf; hold on;
+    plot(hist.x(:,1),hist.x(:,2), '.');
     plot_robot(hist.x,20,h1);
-    h2 = figure(101);
+    
+    h2 = figure(101); clf; hold on;
+    plot(hist.x_rts(:,1),hist.x_rts(:,2), '.');
     plot_robot(hist.x_rts,20,h2);
 end
 

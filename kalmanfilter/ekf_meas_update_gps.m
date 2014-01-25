@@ -8,8 +8,8 @@ gps_est = [state(1) + off(1)*cos(state(3)) - off(2)*sin(state(3));
            state(2) + off(1)*sin(state(3)) + off(2)*cos(state(3))];
        
 % Calculate H
-H = [ 1 0 -off(1)*sin(state(3))-off(2)*cos(state(3)) 0 0;
-      0 1  off(1)*cos(state(3))-off(2)*sin(state(3)) 0 0];
+H = [ 1 0 -off(1)*sin(state(3))-off(2)*cos(state(3)) 0 0 0;
+      0 1  off(1)*cos(state(3))-off(2)*sin(state(3)) 0 0 0];
 
 % Find Kalman Gain
 K = P*H'*(H*P*H'+Rk)^-1;
