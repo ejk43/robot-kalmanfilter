@@ -46,3 +46,30 @@ plot(data.gps(:,2:3),'x-');
 subplot(2,1,2);
 plot([x_smooth y_smooth],'x-');
 
+
+%% Compare Filtered Angular Velocity to IMU Angular Velocity
+
+imu_correction = interp1(hist.t, hist.x(:,6), data.imu(:,1));
+
+plotNum = 30;
+figure(plotNum); clf; 
+subplot(2,1,1); hold on;
+x = hist.x(:,5);
+x_err = 3*sqrt(hist.P(:,5,5));
+x_rts = hist.x_rts(:,5);
+x_rts_err = 3*sqrt(hist.P_rts(:,5,5));
+plot(hist.t, x, 'b', hist.t, x+x_err, 'b:', hist.t, x-x_err, 'b:');
+plot(hist.t, x_rts, 'g', hist.t, x_rts+x_rts_err, 'g:', hist.t, x_rts-x_rts_err, 'g:');
+plot(data.imu(:,1), data.imu(:,2) + imu_correction, 'rx');
+title('Filtered Angular Velocity vs Corrected IMU');
+xlabel('Time (s)');
+ylabel('Angular Velocity (rad/s)');
+subplot(2,1,2); hold on;
+plot(data.imu(:,1), data.imu(:,2), 'bx');
+plot(data.imu(:,1), data.imu(:,2) + imu_correction, 'rx');
+legend('Raw IMU', 'Corrected IMU');
+title('Raw IMU vs Corrected IMU');
+xlabel('Time (s)');
+ylabel('Angular Velocity (rad/s)');
+
+

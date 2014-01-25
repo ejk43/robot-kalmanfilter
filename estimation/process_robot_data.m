@@ -1,4 +1,4 @@
-function [ hist, data ] = process_robot_data(settings, data)
+function [ hist, data, settings ] = process_robot_data(settings, data)
 %PROCESS_ROBOT_DATA 
 
 %% Set up the file path
@@ -68,7 +68,7 @@ for idx_gps = 2:nGPS
     x = x_post;
     P = P_post;
 
-    x(3) = wrap(x(3), 2*pi);
+%     x(3) = wrap(x(3), 2*pi);
     
     hist.x(idx_gps,:) = x;
     hist.x_pre(idx_gps, :) = x_pre;
