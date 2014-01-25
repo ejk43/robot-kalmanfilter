@@ -1,7 +1,10 @@
-function [xout,yout] = circle(x,y,tht)
+function [xout,yout] = circle(x,y,tht,r)
+
+if nargin < 4
+    r = 0.15;
+end
 
 th = 0:pi/50:2*pi;
-r = 0.15; %radius
 xunit = r * cos(th);
 yunit = r * sin(th);
 xunit = [0,xunit];
