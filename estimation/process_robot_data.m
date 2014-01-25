@@ -4,6 +4,8 @@ function [ hist, data ] = process_robot_data(settings, data)
 %% Set up the file path
 addpath('./../preprocessing');
 addpath('./../kalmanfilter');
+addpath('./../plots');
+addpath('./../util');
 
 %% Load Settings (if not supplied)
 if nargin < 1
@@ -42,6 +44,7 @@ hist.x = zeros(nGPS, settings.kf.nStates);
 hist.x_pre = zeros(nGPS, settings.kf.nStates);
 hist.P = zeros(nGPS, settings.kf.nStates, settings.kf.nStates);
 hist.P_pre = zeros(nGPS, settings.kf.nStates, settings.kf.nStates);
+hist.Phi = zeros(nGPS, settings.kf.nStates, settings.kf.nStates);
 
 %% GPS Smoothing
 hist.x(1,:) = x;
@@ -52,15 +55,22 @@ for idx_gps = 2:nGPS
     curr_time = data.gps(idx_gps,1);
     
     % System Update
-    [ x_pre, P_pre ] = ekf_sysm_update_basic(x, P, Q*dt, dt);
+    [ x_pre, P_pre, Phi ] = ekf_sysm_update_basic(x, P, Q*dt, dt);
     
     z = data.gps(idx_gps,2:3)';
     [ x, P ] = ekf_meas_update_gps(x_pre, P_pre, z, R_gps*dt, dt, settings.robot.off_gps);
+    
+    x(3) = CoerceAngle(x(3), 2*pi);
     
     hist.x(idx_gps,:) = x;
     hist.x_pre(idx_gps, :) = x_pre;
     hist.P(idx_gps,:,:) = P;
     hist.P_pre(idx_gps,:,:) = P_pre;
+    hist.Phi(idx_gps,:,:) = Phi;
+end
+
+if settings.kf.smooth
+    [hist.x_rts, hist.P_rts] = SmoothRTS(hist.Phi, hist.x, hist.x_pre, hist.P, hist.P_pre);
 end
 
 % % %% Main Filtering Loop
@@ -100,6 +110,10 @@ end
 
 if settings.plot
     plot_results
+    h1 = figure(100);
+    plot_robot(hist.x,20,h1);
+    h2 = figure(101);
+    plot_robot(hist.x_rts,20,h2);
 end
 
 end

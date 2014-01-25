@@ -25,7 +25,7 @@ end
 
 % EKF Measurement Tuning (Standard Deviation)
 if ~isfield(settings, 'std') 
-    settings.std.gps = 0.02;
+    settings.std.gps = 0.05;
     settings.std.enc = 0.001;
     settings.std.imu = 0.02;
     settings.std.imubias = 0.0001;
@@ -33,11 +33,11 @@ end
 
 % EKF System Tuning (Standard Deviation)
 if ~isfield(settings, 'sys') 
-    settings.sys.x = 0.05;
-    settings.sys.y = 0.05;
+    settings.sys.x = 0.01;
+    settings.sys.y = 0.01;
     settings.sys.tht = 0.001;
-    settings.sys.vel = 0.05;
-    settings.sys.omg = 0.05;
+    settings.sys.vel = 0.01;
+    settings.sys.omg = 0.01;
     settings.sys.verr_r = 0.1;
     settings.sys.verr_l = 0.1;
 end
