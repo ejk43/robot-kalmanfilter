@@ -30,23 +30,17 @@ nGPS = size(data.gps, 1);
 nIMU = size(data.imu, 1);
 
 %% Initialize KF
-x = settings.kf.state;
-P = diag(settings.kf.cov);
-Q = diag([settings.sys.x^2,...
-           settings.sys.y^2,...
-           settings.sys.tht^2,...
-           settings.sys.vel^2,...
-           settings.sys.omg^2,...
-           settings.sys.imubias^2]);
+[x, P, Q] = initialize_kf(settings);
+nStates = size(x,1);
 R_gps = diag([settings.std.gps^2, settings.std.gps^2]);
 R_imu = settings.std.imu^2;
 
 hist.t = data.gps(:,1);
-hist.x = zeros(nGPS, settings.kf.nStates);
-hist.x_pre = zeros(nGPS, settings.kf.nStates);
-hist.P = zeros(nGPS, settings.kf.nStates, settings.kf.nStates);
-hist.P_pre = zeros(nGPS, settings.kf.nStates, settings.kf.nStates);
-hist.Phi = zeros(nGPS, settings.kf.nStates, settings.kf.nStates);
+hist.x = zeros(nGPS, nStates);
+hist.x_pre = zeros(nGPS, nStates);
+hist.P = zeros(nGPS, nStates, nStates);
+hist.P_pre = zeros(nGPS, nStates, nStates);
+hist.Phi = zeros(nGPS, nStates, nStates);
 
 %% GPS Smoothing
 hist.x(1,:) = x;
@@ -61,14 +55,18 @@ for idx_gps = 2:nGPS
     x_post = x_pre;
     P_post = P_pre;
     
-    z_gps = data.gps(idx_gps,2:3)';
-    [ x_post, P_post ] = ekf_meas_update_gps(x_post, P_post, z_gps, R_gps*dt, dt, settings.robot.off_gps);
-    z_imu = mean(data.imu(data.gps(idx_gps-1,1)<data.imu(:,1) & data.imu(:,1)<data.gps(idx_gps,1), 2));
-    [ x_post, P_post ] = ekf_meas_update_imu(x_post, P_post, z_imu, R_imu*dt, dt);
+    if settings.kf.useGPS
+        z_gps = data.gps(idx_gps,2:3)';
+        [ x_post, P_post ] = ekf_meas_update_gps(x_post, P_post, z_gps, R_gps*dt, dt, settings.robot.off_gps);
+    end
+    
+    if settings.kf.useIMU
+        z_imu = mean(data.imu(data.gps(idx_gps-1,1)<data.imu(:,1) & data.imu(:,1)<data.gps(idx_gps,1), 2));
+        [ x_post, P_post ] = ekf_meas_update_imu(x_post, P_post, z_imu, R_imu*dt, dt);
+    end
+    
     x = x_post;
     P = P_post;
-
-%     x(3) = wrap(x(3), 2*pi);
     
     hist.x(idx_gps,:) = x;
     hist.x_pre(idx_gps, :) = x_pre;

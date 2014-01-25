@@ -6,7 +6,9 @@ function [x_post, P_post] = ekf_meas_update_imu(x, P, z, Rk, dt)
 imu_est = [x(5)-x(6)];
        
 % Calculate H
-H = [ 0 0 0 0 1 -1];
+H = zeros(1, size(x,1));
+H(1,5) = 1;
+H(1,6) = -1;
 
 % Find Kalman Gain
 K = P*H'*(H*P*H'+Rk)^-1;

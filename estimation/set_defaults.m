@@ -18,12 +18,15 @@ end
 
 % EKF Settings
 if ~isfield(settings, 'kf')
-    settings.kf.type = 'Vel';
-    settings.kf.nStates = 6;
-    settings.kf.state = zeros(settings.kf.nStates, 1);
-%     settings.kf.cov = [100, 100, pi, 1, 1, 0.1, 0.1];
-    settings.kf.cov = [100, 100, pi, 1, 1, 0.1];
+    settings.kf.useGPS = 1;
+    settings.kf.useIMU = 1;
+    settings.kf.useOdom = 0;
+    settings.kf.useWheelError = 0;
+    
     settings.kf.smooth = 1;
+    
+%     settings.kf.nStates = 6;
+%     settings.kf.state = zeros(settings.kf.nStates, 1);
 end
 
 % EKF Measurement Tuning (Standard Deviation)
@@ -43,6 +46,18 @@ if ~isfield(settings, 'sys')
     settings.sys.verr_r = 0.1;
     settings.sys.verr_l = 0.1;
     settings.sys.imubias = 0.001;
+end
+
+% Initial Covariance
+if ~isfield(settings, 'cov')
+    settings.cov.x = 100;
+    settings.cov.y = 100;
+    settings.cov.tht = pi;
+    settings.cov.vel = 1;
+    settings.cov.omg = 1;
+    settings.cov.imubias = 0.1;
+    settings.cov.verr_right = 0.1;
+    settings.cov.verr_left = 0.1; 
 end
     
 % Robot constants

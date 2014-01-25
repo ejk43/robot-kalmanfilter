@@ -24,4 +24,4 @@ for idx= ndec:ndec:size(hist.t,1)
     idx_last = idx;
     pause(0.1);
 end
-title('DONE')
+title(['DONE: ' num2str(round(hist.t(end,1))) 's/' num2str(round(hist.t(end,1))) 's'])
