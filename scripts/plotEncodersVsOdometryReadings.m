@@ -101,3 +101,9 @@ ylabel('Measured Rotational Velocity (rad/s)');
 title('Wheel Rotational Velocity');
 legend('Raw Encoders','Uniform 50 Hz','Raw Encoders at 25 Hz')
 linkaxes(px,'x');
+
+
+figure(plotStart+idx); idx=idx+1; clf; 
+plot(data.enc(:,1),'.');
+title('Encoder Timestamps')
+ylabel('Time (s)')

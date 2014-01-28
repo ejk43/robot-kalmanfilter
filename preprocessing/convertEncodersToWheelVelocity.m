@@ -1,4 +1,4 @@
-function [ vel, omg ] = convertEncodersToVelocity( time, encLeft, encRight,  settings)
+function [ velLeft, velRight ] = convertEncodersToWheelVelocity( time, encLeft, encRight,  settings)
 
 if nargin < 4
     settings.tpm_right = 26500; % Ticks per meter

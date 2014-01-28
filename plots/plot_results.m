@@ -36,7 +36,7 @@ heading_ptbypt_smooth = atan2(coord_diff_smooth(:,2), coord_diff_smooth(:,1));
 
 plotNum = 20;
 figure(plotNum); plotNum=plotNum+1; clf; hold on;
-plot(hist.t(2:end),[heading_ptbypt heading_ptbypt_smooth],'x');
+plot(data.gps(2:end,1),[heading_ptbypt heading_ptbypt_smooth],'x');
 plot(hist.t,wrap(hist.x(:,3),2*pi),'r-x');
 
 
@@ -58,9 +58,12 @@ x = hist.x(:,5);
 x_err = 3*sqrt(hist.P(:,5,5));
 x_rts = hist.x_rts(:,5);
 x_rts_err = 3*sqrt(hist.P_rts(:,5,5));
-plot(hist.t, x, 'b', hist.t, x+x_err, 'b:', hist.t, x-x_err, 'b:');
-plot(hist.t, x_rts, 'g', hist.t, x_rts+x_rts_err, 'g:', hist.t, x_rts-x_rts_err, 'g:');
+plot(hist.t, x, 'b');
+plot(hist.t, x_rts, 'g');
 plot(data.imu(:,1), data.imu(:,2) + imu_correction, 'rx');
+plot(hist.t, x+x_err, 'b:', hist.t, x-x_err, 'b:');
+plot(hist.t, x_rts+x_rts_err, 'g:', hist.t, x_rts-x_rts_err, 'g:');
+legend('State', 'RTS-smoothed', 'Corrected IMU');
 title('Filtered Angular Velocity vs Corrected IMU');
 xlabel('Time (s)');
 ylabel('Angular Velocity (rad/s)');
