@@ -42,50 +42,6 @@ hist.P = zeros(nGPS, nStates, nStates);
 hist.P_pre = zeros(nGPS, nStates, nStates);
 hist.Phi = zeros(nGPS, nStates, nStates);
 
-% %% GPS Smoothing
-% hist.x(1,:) = x;
-% hist.P(1,:,:) = P;
-% for idx_gps = 2:nGPS
-%     % Calculate dt based on GPS timestamp
-%     dt = data.gps(idx_gps,1)-data.gps(idx_gps-1,1);
-%     curr_time = data.gps(idx_gps,1);
-%     
-% %     % Odometry Measurement Update
-% %     if settings.kf.useOdom
-% %         odom = data.odom(data.gps(idx_gps-1,1)<data.odom(:,1) & data.odom(:,1)<data.gps(idx_gps,1), 2:3);
-% %     end
-%     
-%     % System Update
-%     [ x_pre, P_pre, Phi ] = ekf_sysm_update_basic(x, P, Q*dt, dt);
-%     x_post = x_pre;
-%     P_post = P_pre;
-%     
-%     % GPS Measurement Update
-%     if settings.kf.useGPS
-%         z_gps = data.gps(idx_gps,2:3)';
-%         [ x_post, P_post ] = ekf_meas_update_gps(x_post, P_post, z_gps, R_gps*dt, dt, settings.robot.off_gps);
-%     end
-%     
-%     % IMU Measurement Update
-%     if settings.kf.useIMU
-%         z_imu = mean(data.imu(data.gps(idx_gps-1,1)<data.imu(:,1) & data.imu(:,1)<data.gps(idx_gps,1), 2));
-%         [ x_post, P_post ] = ekf_meas_update_imu(x_post, P_post, z_imu, R_imu*dt, dt);
-%     end
-%     
-%     x = x_post;
-%     P = P_post;
-%     
-%     hist.x(idx_gps,:) = x;
-%     hist.x_pre(idx_gps, :) = x_pre;
-%     hist.P(idx_gps,:,:) = P;
-%     hist.P_pre(idx_gps,:,:) = P_pre;
-%     hist.Phi(idx_gps,:,:) = Phi;
-% end
-% 
-% if settings.kf.smooth
-%     [hist.x_rts, hist.P_rts] = SmoothRTS(hist.Phi, hist.x, hist.x_pre, hist.P, hist.P_pre);
-% end
-
 %% Main Filtering Loop
 
 hist.t = data.odom(:,1);
