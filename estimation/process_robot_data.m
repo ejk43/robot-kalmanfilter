@@ -22,8 +22,8 @@ data = load_data_ros(settings, data);
 %% Preprocess as necessary
 
 % Convert encoder data to odometry
-[vel_rgt, vel_lft] = convertEncodersToWheelVelocity(data.enc(:,1), data.enc(:,2), data.enc(:,3));
-data.odom = [ data.enc(1:end,1), [0;vel_rgt], [0;vel_lft]];
+[vel_lft, vel_rgt] = convertEncodersToWheelVelocity(data.enc(:,1), data.enc(:,2), data.enc(:,3));
+data.odom = [ data.enc(1:end,1), [0;vel_lft], [0;vel_rgt]];
 
 nOdom = size(data.odom, 1);
 nGPS = size(data.gps, 1);
@@ -106,14 +106,7 @@ end
 
 if settings.plot
     plot_results
-    
-    h1 = figure(100); clf; hold on;
-    plot(hist.x(:,1),hist.x(:,2), '.');
-    plot_robot(hist.x,20,h1);
-    
-    h2 = figure(101); clf; hold on;
-    plot(hist.x_rts(:,1),hist.x_rts(:,2), '.');
-    plot_robot(hist.x_rts,20,h2);
+    plot_timelapse
 end
 
 end

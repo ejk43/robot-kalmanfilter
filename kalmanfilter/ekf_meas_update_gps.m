@@ -4,8 +4,7 @@ function [state_post, P_post] = ekf_meas_update_gps(x, P, z, Rk, dt, off)
 % z = [x_gps, y_gps] <- this is the actual GPS measurement reading
 
 % Find the expected measurement: h(state)
-gps_est = [x(1) + off(1)*cos(x(3)) - off(2)*sin(x(3));
-           x(2) + off(1)*sin(x(3)) + off(2)*cos(x(3))];
+gps_est = h_gps(x, off);
        
 % Calculate H
 H = zeros(2, size(x,1));

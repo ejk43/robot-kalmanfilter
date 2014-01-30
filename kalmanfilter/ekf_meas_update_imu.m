@@ -3,7 +3,8 @@ function [x_post, P_post] = ekf_meas_update_imu(x, P, z, Rk, dt)
 % z = [omg_imu] <- this is the actual GPS measurement reading
 
 % Find the expected measurement: h(state)
-imu_est = [x(5)-x(6)];
+% imu_est = [x(5)-x(6)];
+imu_est = h_imu(x);
        
 % Calculate H
 H = zeros(1, size(x,1));
