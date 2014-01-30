@@ -22,6 +22,7 @@ time = [0; cumsum(segments(:,1))];
 traj.t = (0:dt:time(end))';
 traj.state = zeros(size(traj.t,1), 5);
 
+% Integrate velocities
 seg_idx = 1;
 v = [0,0];
 accel_limit = [settings.traj.vel_limit, settings.traj.omg_limit];
@@ -34,7 +35,8 @@ for ii = 2:size(traj.t,1)
         traj.state(ii-1,1:3)', dt);
 end
 
-
+% TODO: Add wheel velocity errors to simulated true state
+% TODO: Add track width and encoder scaling states
 
 end
 
