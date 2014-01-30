@@ -5,8 +5,8 @@ names = {'X Position';
          'Forward Velocity';
          'Angular Velocity';
          'IMU Bias';
-         'Velocity Error (Right Wheel)';
-         'Velocity Error (Left Wheel)'};
+         'Velocity Error (Left Wheel)';
+         'Velocity Error (Right Wheel)'};
     
 
 plotNum = 1;
@@ -74,5 +74,18 @@ legend('Raw IMU', 'Corrected IMU');
 title('Raw IMU vs Corrected IMU');
 xlabel('Time (s)');
 ylabel('Angular Velocity (rad/s)');
+
+%% Stuff
+figure(40);
+px(1) = subplot(3,1,1); 
+plot(data.odom(:,1),data.odom(:,2),'.'); 
+title('Right Vel')
+px(2) = subplot(3,1,2); 
+plot(data.odom(:,1),data.odom(:,3),'.'); 
+title('Left Vel')
+px(3) = subplot(3,1,3); 
+plot(hist.t, hist.x(:,3),'.'); 
+title('Heading (rad)');
+linkaxes(px,'x')
 
 
