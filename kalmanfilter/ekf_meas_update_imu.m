@@ -9,7 +9,7 @@ imu_est = h_imu(x);
 % Calculate H
 H = zeros(1, size(x,1));
 H(1,5) = 1;
-H(1,6) = -1;
+H(1,6) = 1;
 
 % Find Kalman Gain
 K = P*H'*(H*P*H'+Rk)^-1;

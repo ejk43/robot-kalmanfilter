@@ -21,7 +21,6 @@ for ii = 1:size(hist.x,2)
     title([names{ii}]);
     xlabel('Time (s)');
     ylabel('State');
-    
 end
 
 %% Filtered Heading vs Point-by-Point Heading

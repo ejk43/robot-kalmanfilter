@@ -3,7 +3,7 @@
 plotNum = 100;
 
 % Decimate GPS by this number, decimate the state according to GPS timestamps
-ndec = 5;
+ndec = 10;
 pausetime = 0.1;
 state = hist.x_rts;
 time = data.gps(:,1);

@@ -5,11 +5,6 @@ if nargin < 1
     settings = [];
 end
 
-if ~isfield(settings, 'plot')
-    % Trajectory settings
-    settings.plot = 1;
-end
-
 % Log to use
 if ~isfield(settings, 'segments')
     % Each segment is in the form:
@@ -56,9 +51,9 @@ if ~isfield(settings, 'meas')
     settings.meas.useOdom = 1;
 
     % faultTime is a m x 2 array. m = # of faults. col = [start, end]
-    settings.meas.faultTime = [0 0];
+    settings.meas.faultTime = [20 25; 40 45];
     % faultMagn is a m x 2 array. m = # of faults. col = [left, right]
-    settings.meas.faultMagn = [0 0];
+    settings.meas.faultMagn = [0.5 0; 0 0.5];
 end
 
 end
