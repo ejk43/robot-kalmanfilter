@@ -21,10 +21,6 @@ data = load_data_ros(settings, data);
 
 %% Preprocess as necessary
 
-% Convert encoder data to odometry
-[vel_lft, vel_rgt] = convertEncodersToWheelVelocity(data.enc(:,1), data.enc(:,2), data.enc(:,3));
-data.odom = [ data.enc(1:end,1), [0;vel_lft], [0;vel_rgt]];
-
 nOdom = size(data.odom, 1);
 nGPS = size(data.gps, 1);
 nIMU = size(data.imu, 1);
@@ -73,7 +69,7 @@ for idx_odom = 2:nOdom
     
     % GPS Measurement Update
     if settings.kf.useGPS
-        z_gps = data.gps(data.odom(idx_odom-1,1)<data.gps(:,1) & data.gps(:,1)<data.odom(idx_odom,1), 2:3)';
+        z_gps = data.gps(data.odom(idx_odom-1,1)<data.gps(:,1) & data.gps(:,1)<=data.odom(idx_odom,1), 2:3)';
         if ~isempty(z_gps)
             [ x_post, P_post ] = ekf_meas_update_gps(x_post, P_post, z_gps, R_gps*dt_gps, dt_gps, settings.robot.off_gps);
         end
@@ -81,7 +77,7 @@ for idx_odom = 2:nOdom
     
     % IMU Measurement Update
     if settings.kf.useIMU
-        z_imu = data.imu(data.odom(idx_odom-1,1)<data.imu(:,1) & data.imu(:,1)<data.odom(idx_odom,1), 2);
+        z_imu = data.imu(data.odom(idx_odom-1,1)<data.imu(:,1) & data.imu(:,1)<=data.odom(idx_odom,1), 2);
         if ~isempty(z_imu)
             [ x_post, P_post ] = ekf_meas_update_imu(x_post, P_post, z_imu, R_imu*dt_imu, dt_gps);
         end

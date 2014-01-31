@@ -13,5 +13,6 @@ traj = generate_trajectory(traj_settings);
 data = generate_sensors(traj, traj_settings);
 
 %% Run sensor data through filter
+hist = process_robot_data(settings, data);
 
 %% Compare estimated state with true state

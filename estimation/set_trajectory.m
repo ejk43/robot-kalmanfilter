@@ -28,8 +28,8 @@ end
 if ~isfield(settings, 'traj')
     % Trajectory settings
     settings.traj.dt = 1/100;
-    settings.traj.vel_limit = 100;
-    settings.traj.omg_limit = 100;
+    settings.traj.vel_limit = 1;
+    settings.traj.omg_limit = 1;
 end
 
 if ~isfield(settings, 'std')

@@ -23,7 +23,7 @@ if nargin < 1
 end
 
 %% Generate the Sensor Data
-plotNum = 1;
+plotNum = 200;
 
 ts = traj.t(1);
 te = traj.t(end);
@@ -34,7 +34,7 @@ if trajsettings.meas.useGPS
     % Generate GPS Measurements
     data.gps = zeros(nGPS, 3);
     data.gps(:,1) = ts:trajsettings.dt.gps:te;
-    allgps = h_gps(traj.state', settings.robot.off_gps')';
+    allgps = h_gps(traj.state', settings.robot.off_gps)';
     data.gps(:,2:3) = interp1(traj.t, allgps, data.gps(:,1)) + gpsnoise;
     
     if trajsettings.plot
