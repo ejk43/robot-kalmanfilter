@@ -40,7 +40,7 @@ end
 
 nIMU = floor((te-ts)/ trajsettings.dt.imu)+1;
 imunoise = trajsettings.std.imu*randn(nIMU,1);
-if trajsettings.meas.useIMU    
+if trajsettings.meas.useIMU
     % Generate Imu Measurements
     data.imu = zeros(nIMU, 2);
     data.imu(:,1) = ts:trajsettings.dt.imu:te;

@@ -1,5 +1,6 @@
 function [x_post, P_post] = ekf_meas_update_odom(x, P, z, Rk, dt, b)
-% state = [x, y, theta, v, omega]'
+% state = [x, y, theta, v, omega, imubias, ...
+%          verrL, verrR, scaleTpmL, scaleTpmR, scaleB]'
 % z = [vel_left; vel_right] <- this is the odom measurement reading
 
 nStates = size(x,1);
@@ -17,7 +18,12 @@ if nStates >= 8
     H(1,7) = 1;
     H(2,8) = 1;
 end
-
+if nStates > 8
+    H = ...
+    [0 0 0 x(9) -x(9)*b*x(11)/2  0 x(9) 0  (x(4)-b*x(11)*x(5)/2+x(7)) 0 -x(9)*b*x(5)/2; 
+     0 0 0 x(10) x(10)*b*x(11)/2 0 0 x(10) 0 (x(4)+b*x(11)*x(5)/2+x(8))  x(10)*b*x(5)/2 ];
+end
+     
 % Find Kalman Gain
 K = P*H'*(H*P*H'+Rk)^-1;
 

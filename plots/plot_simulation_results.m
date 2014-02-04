@@ -12,7 +12,10 @@ names = {'X Position';
     'Angular Velocity';
     'IMU Bias';
     'Velocity Error (Left Wheel)';
-    'Velocity Error (Right Wheel)'};
+    'Velocity Error (Right Wheel)';
+    'Ticks-Per-Meter Scaling (Left Wheel)';
+    'Ticks-Per-Meter Scaling (Right Wheel)';
+    'Track Width Scaling'};
 
 % Put the true state into timestamps of the filtered data
 state_true = interp1(traj.t, traj.state, hist.t);
@@ -37,10 +40,12 @@ for ii = 1:size(hist.x,2)
     px(2) = subplot(2,1,2); hold on
     err = state_true(:,ii) - x;
     err_rts = state_true(:,ii) - x_rts;
-    plot(hist.t, err, 'b', hist.t, err+x_err, 'b:', hist.t, err-x_err, 'b:');
-    plot(hist.t, err_rts, 'g', hist.t, err_rts+x_rts_err, 'g:', hist.t, err_rts-x_rts_err, 'g:');
+    plot(hist.t, err, 'b', hist.t, x_err, 'b:', hist.t, -x_err, 'b:');
+    plot(hist.t, err_rts, 'g', hist.t, x_rts_err, 'g:', hist.t, -x_rts_err, 'g:');
     xlabel('Time (s)'); ylabel('Error');
     title([names{ii} ' Error']);
+    
+    linkaxes(px,'x');
 end
 
 

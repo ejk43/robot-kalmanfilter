@@ -20,16 +20,13 @@ end
 data = load_data_ros(settings, data);
 
 %% Preprocess as necessary
-
 nOdom = size(data.odom, 1);
 nGPS = size(data.gps, 1);
 nIMU = size(data.imu, 1);
 
 %% Initialize KF
-[x, P, Q] = initialize_kf(settings);
+[x, P, Q, R] = initialize_kf(settings);
 nStates = size(x,1);
-R_gps = diag([settings.std.gps^2, settings.std.gps^2]);
-R_imu = settings.std.imu^2;
 
 hist.t = data.gps(:,1);
 hist.x = zeros(nGPS, nStates);
@@ -62,16 +59,16 @@ for idx_odom = 2:nOdom
     % Odometry Measurement Update
     if settings.kf.useOdom
         z_odom = data.odom(idx_odom,2:3)';
-        R_odom = diag([settings.std.enc_alp*abs(z_odom(1)) + settings.std.enc_eps, ...
+        R.odom = diag([settings.std.enc_alp*abs(z_odom(1)) + settings.std.enc_eps, ...
             settings.std.enc_alp*abs(z_odom(2)) + settings.std.enc_eps]);
-        [ x_post, P_post ] = ekf_meas_update_odom(x_post, P_post, z_odom, R_odom*dt, dt, settings.robot.track_m);
+        [ x_post, P_post ] = ekf_meas_update_odom(x_post, P_post, z_odom, R.odom*dt, dt, settings.robot.track_m);
     end
     
     % GPS Measurement Update
     if settings.kf.useGPS
         z_gps = data.gps(data.odom(idx_odom-1,1)<data.gps(:,1) & data.gps(:,1)<=data.odom(idx_odom,1), 2:3)';
         if ~isempty(z_gps)
-            [ x_post, P_post ] = ekf_meas_update_gps(x_post, P_post, z_gps, R_gps*dt_gps, dt_gps, settings.robot.off_gps);
+            [ x_post, P_post ] = ekf_meas_update_gps(x_post, P_post, z_gps, R.gps*dt_gps, dt_gps, settings.robot.off_gps);
         end
     end
     
@@ -79,7 +76,7 @@ for idx_odom = 2:nOdom
     if settings.kf.useIMU
         z_imu = data.imu(data.odom(idx_odom-1,1)<data.imu(:,1) & data.imu(:,1)<=data.odom(idx_odom,1), 2);
         if ~isempty(z_imu)
-            [ x_post, P_post ] = ekf_meas_update_imu(x_post, P_post, z_imu, R_imu*dt_imu, dt_gps);
+            [ x_post, P_post ] = ekf_meas_update_imu(x_post, P_post, z_imu, R.imu*dt_imu, dt_gps);
         end
     end
     

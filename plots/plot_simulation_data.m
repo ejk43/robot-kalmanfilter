@@ -32,6 +32,7 @@ plot(traj.t, traj.odom(:,2), 'r.', data.odom(:,1), data.odom(:,3), 'ko');
 xlabel('Time (s)'); ylabel('Forward Velocity (m/s)');
 title('Right Wheel Odometry Measurements')
 legend('Perfect Odom', 'Downsampled Noisy Odom');
+linkaxes(px,'x');
 
 
 end
