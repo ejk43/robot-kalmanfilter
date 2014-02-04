@@ -52,9 +52,9 @@ if ~isfield(settings, 'sys')
     settings.sys.verr_r = 0.01;
     settings.sys.verr_l = 0.01;
     settings.sys.imubias = 0.00005;
-    settings.sys.scale_l = 0.0000001;
-    settings.sys.scale_r = 0.0000001;
-    settings.sys.scale_b = 0.0000001;
+    settings.sys.scale_l = 0.00001;
+    settings.sys.scale_r = 0.00001;
+    settings.sys.scale_b = 0.00001;
 end
 
 % EKF Measurement Tuning (Standard Deviation)
@@ -75,9 +75,9 @@ if ~isfield(settings, 'cov')
     settings.cov.imubias = 0.1;
     settings.cov.verr_r = 0.01;
     settings.cov.verr_l = 0.01;
-    settings.cov.scale_l = 0.0001;
-    settings.cov.scale_r = 0.0001;
-    settings.cov.scale_b = 0.0001;
+    settings.cov.scale_l = 0.001;
+    settings.cov.scale_r = 0.001;
+    settings.cov.scale_b = 0.001;
 end
 
 % Initial Covariance
