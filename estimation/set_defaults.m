@@ -49,8 +49,8 @@ if ~isfield(settings, 'sys')
     settings.sys.tht = 0.01;
     settings.sys.vel = 0.1;
     settings.sys.omg = 0.01;
-    settings.sys.verr_r = 0.01;
-    settings.sys.verr_l = 0.01;
+    settings.sys.verr_r = 0.0001;
+    settings.sys.verr_l = 0.0001;
     settings.sys.imubias = 0.00005;
     settings.sys.scale_l = 0.00001;
     settings.sys.scale_r = 0.00001;
