@@ -21,6 +21,9 @@ To run:
 To Download Log Data:
 
 1. Download the zip files from my Google Drive: https://drive.google.com/folderview?id=0B4jB60EiIiLPdDZlcUVyLW9pVjg&usp=sharing
+
 2. Extract the zip files into a directory
+
 3. For example, the directory `robot-kalmanfilter/logs` would contain the directories `Competition_Saturday` and `LaserTest_Drive`. Each of these directories contain text files of raw robot data.
+
 4. Extract data using the readLogs command: `data = readLogs('robot-kalmanfilter/logs', 'Competition_Saturday');`
