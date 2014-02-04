@@ -3,7 +3,7 @@
 plotNum = 100;
 
 % Decimate GPS by this number, decimate the state according to GPS timestamps
-ndec = 10;
+ndec = 4;
 pausetime = 0.1;
 state = hist.x_rts;
 time = data.gps(:,1);
@@ -32,6 +32,7 @@ for idx= ndec:ndec:size(state_ds,1)
     axis([x_min x_max y_min y_max])
     title(['Running: ' num2str(round(time(idx,1))) 's/' num2str(round(time(end,1))) 's'])
     idx_last = idx;
+    axis square
 %     currFrame = getframe;
 %     writeVideo(vidObj,currFrame);
     pause(pausetime);
