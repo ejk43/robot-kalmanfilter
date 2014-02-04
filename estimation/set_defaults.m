@@ -101,8 +101,8 @@ if ~isfield(settings, 'robot')
     settings.robot.tpm_right = 26500; % Ticks per meter, Right Wheel
     settings.robot.tpm_left= 27150; % Ticks per meter, Left Wheel
     settings.robot.track_m = 0.55; % Track Width
-    settings.robot.off_gps = [0; 0]; % GPS offset in body frame
-    %     settings.robot.off_gps = [-0.45; .1]; % GPS offset in body frame
+%     settings.robot.off_gps = [0; 0]; % GPS offset in body frame
+        settings.robot.off_gps = [-0.45; 0]; % GPS offset in body frame
 end
 
 end

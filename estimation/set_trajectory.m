@@ -29,7 +29,7 @@ end
 
 if ~isfield(settings, 'std')
     % Standard Deviations for Simulated Measurements
-    settings.std.gps = 0.01;
+    settings.std.gps = 0.025;
     settings.std.imu = 0.002;
     settings.std.odom = 0.001;
 end
@@ -50,7 +50,7 @@ if ~isfield(settings, 'meas')
     settings.meas.useIMU = 1;
     settings.meas.useOdom = 1;
     
-    settings.meas.useFault = 0;
+    settings.meas.useFault = 1;
     settings.meas.useSystemParams = 0;
     
     settings.meas.scaleL = 1;
@@ -58,7 +58,7 @@ if ~isfield(settings, 'meas')
     settings.meas.scaleB = 1;
 
     % faultTime is a m x 2 array. m = # of faults. col = [start, end]
-    settings.meas.faultTime = [20 25; 40 45];
+    settings.meas.faultTime = [20 30; 35 45];
     % faultMagn is a m x 2 array. m = # of faults. col = [left, right]
     settings.meas.faultMagn = [0.5 0; 0 0.5];
 end
