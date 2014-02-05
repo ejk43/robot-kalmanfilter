@@ -1,24 +1,33 @@
-function [ ] = plot_simulation_results( hist, traj, plotNum )
+function [ ] = plot_simulation_results( hist, traj, settings, plotNum )
 %Plots the simulation results
 
 if nargin<3
     plotNum = 1;
 end
 
+
 names = {'X Position';
     'Y Position';
     'Heading';
     'Forward Velocity';
     'Angular Velocity';
-    'IMU Bias';
-    'Velocity Error (Left Wheel)';
-    'Velocity Error (Right Wheel)';
-    'Ticks-Per-Meter Scaling (Left Wheel)';
-    'Ticks-Per-Meter Scaling (Right Wheel)';
-    'Track Width Scaling'};
+    'IMU Bias'};
+
+if settings.kf.useWheelError
+    names = [names;
+        {'Velocity Error (Left Wheel)'};
+        {'Velocity Error (Right Wheel)'}];
+end
+
+if settings.kf.useSystemParams
+    names = [names;
+        {'Ticks-Per-Meter Scaling (Left Wheel)'};
+        {'Ticks-Per-Meter Scaling (Right Wheel)'};
+        {'Track Width Scaling'}];
+end
 
 % Put the true state into timestamps of the filtered data
-state_true = interp1(traj.t, traj.state, hist.t);
+state_true = interp1(traj.t, traj.x, hist.t);
 
 px = [];
 for ii = 1:size(hist.x,2)
@@ -27,13 +36,10 @@ for ii = 1:size(hist.x,2)
     x_rts = hist.x_rts(:,ii);
     x_rts_err = 3*sqrt(hist.P_rts(:,ii,ii));
     
-    figure(plotNum+ii-1); clf; 
+    figure(plotNum+ii-1); clf;
     px(1) = subplot(2,1,1); hold on;
     plot(hist.t, x, 'b', hist.t, x+x_err, 'b:', hist.t, x-x_err, 'b:');
     plot(hist.t, x_rts, 'g', hist.t, x_rts+x_rts_err, 'g:', hist.t, x_rts-x_rts_err, 'g:');
-    if ii <= size(traj.state, 2)
-        plot(traj.t, traj.state(:,ii), 'r-');
-    end
     title([names{ii}]);
     xlabel('Time (s)'); ylabel('State');
     

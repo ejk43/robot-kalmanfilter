@@ -24,8 +24,8 @@ if ~isfield(settings, 'kf')
     settings.kf.useGPS = 1;
     settings.kf.useIMU = 1;
     settings.kf.useOdom = 1;
-    settings.kf.useWheelError = 1;
-    settings.kf.useSystemParams = 0;
+    settings.kf.useWheelError = 0;
+    settings.kf.useSystemParams = 1;
     
     settings.kf.smooth = 1;
 end
@@ -52,9 +52,9 @@ if ~isfield(settings, 'sys')
     settings.sys.verr_r = 0.01;
     settings.sys.verr_l = 0.01;
     settings.sys.imubias = 0.00005;
-    settings.sys.scale_l = 0.0000001;
-    settings.sys.scale_r = 0.0000001;
-    settings.sys.scale_b = 0.0000001;
+    settings.sys.scale_l = 0.00001;
+    settings.sys.scale_r = 0.00001;
+    settings.sys.scale_b = 0.00001;
 end
 
 % EKF Measurement Tuning (Standard Deviation)
@@ -75,9 +75,9 @@ if ~isfield(settings, 'cov')
     settings.cov.imubias = 0.1;
     settings.cov.verr_r = 0.0001;
     settings.cov.verr_l = 0.0001;
-    settings.cov.scale_l = 0.00001;
-    settings.cov.scale_r = 0.00001;
-    settings.cov.scale_b = 0.00001;
+    settings.cov.scale_l = 0.0001;
+    settings.cov.scale_r = 0.0001;
+    settings.cov.scale_b = 0.0001;
 end
 
 % Initial Covariance
@@ -101,8 +101,8 @@ if ~isfield(settings, 'robot')
     settings.robot.tpm_right = 26500; % Ticks per meter, Right Wheel
     settings.robot.tpm_left= 27150; % Ticks per meter, Left Wheel
     settings.robot.track_m = 0.55; % Track Width
-    settings.robot.off_gps = [0; 0]; % GPS offset in body frame
-%         settings.robot.off_gps = [-0.45; 0]; % GPS offset in body frame
+%     settings.robot.off_gps = [0; 0]; % GPS offset in body frame
+        settings.robot.off_gps = [-0.45; 0]; % GPS offset in body frame
 end
 
 end

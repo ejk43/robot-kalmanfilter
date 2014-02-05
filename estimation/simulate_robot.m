@@ -19,4 +19,4 @@ hist = process_robot_data(settings, data);
 %% Compare estimated state with true state
 
 plot_simulation_data(data, traj, 1);
-plot_simulation_results( hist, traj, 100 )
+plot_simulation_results( hist, traj, settings, 100 )

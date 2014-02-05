@@ -22,6 +22,15 @@ if nargin < 1
     traj = generate_trajectory(trajsettings);
 end
 
+%% Generate the trajectory state using the current KF settings
+traj.x = traj.state(:,1:6);
+if settings.kf.useWheelError
+    traj.x = [traj.x, traj.state(:,7:8)];
+end
+if settings.kf.useSystemParams
+    traj.x = [traj.x, traj.state(:,9:11)];
+end
+
 %% Generate the Sensor Data
 plotNum = 200;
 
