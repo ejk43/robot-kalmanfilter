@@ -10,6 +10,7 @@ traj_settings = set_trajectory;
 traj = generate_trajectory(traj_settings);
 
 %% Generate Sensor Data
+rng(1);
 [data, traj] = generate_sensors(traj, traj_settings);
 
 %% Run sensor data through filter
