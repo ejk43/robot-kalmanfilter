@@ -18,6 +18,7 @@ if nargin < 2
     data = [];
 end
 data = load_data_ros(settings, data);
+data.odom = add_odom_fault(data.odom, settings);
 
 %% Preprocess as necessary
 nOdom = size(data.odom, 1);
@@ -61,7 +62,7 @@ for idx_odom = 2:nOdom
         z_odom = data.odom(idx_odom,2:3)';
         R.odom = diag([settings.std.enc_alp*abs(z_odom(1)) + settings.std.enc_eps, ...
             settings.std.enc_alp*abs(z_odom(2)) + settings.std.enc_eps]);
-        [ x_post, P_post ] = ekf_meas_update_odom(x_post, P_post, z_odom, R.odom*dt, dt, settings.robot.track_m);
+        [ x_post, P_post ] = ekf_meas_update_odom(x_post, P_post, z_odom, R.odom*dt, dt, settings);
     end
     
     % GPS Measurement Update

@@ -54,7 +54,7 @@ if trajsettings.meas.useOdom
     % Generate Imu Measurements
     data.odom = zeros(nOdom, 2);
     data.odom(:,1) = ts:trajsettings.dt.odom:te;
-    traj.odom = h_enc(traj.state', settings.robot.track_m)';
+    traj.odom = h_enc_full(traj.state', settings.robot.track_m)';
     data.odom(:,2:3) = interp1(traj.t, traj.odom, data.odom(:,1)) + odomnoise;
 end
 
