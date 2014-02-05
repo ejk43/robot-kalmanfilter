@@ -50,7 +50,7 @@ if ~isfield(settings, 'meas')
     settings.meas.useIMU = 1;
     settings.meas.useOdom = 1;
     
-    settings.meas.useFault = 0;
+    settings.meas.useFault = 1;
     settings.meas.useSystemParams = 1;
     
     settings.meas.scaleL = 1;
