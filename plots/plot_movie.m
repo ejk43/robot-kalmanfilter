@@ -5,9 +5,15 @@ plotNum = 100;
 % Decimate GPS by this number, decimate the state according to GPS timestamps
 ndec = 4;
 pausetime = 0.1;
-% state = hist.x;
-state = hist.x_rts;
+% state_data = hist.x;
+state_data = hist.x_rts;
 time = data.gps(:,1);
+
+state = zeros(size(state_data,1),11);
+state(:,1:6) = state_data(:,1:6);
+if settings.kf.useWheelError
+    state(:,7:8) = state_data(:,7:8);
+end
 
 % vidObj = VideoWriter('robot2.avi');
 % open(vidObj);

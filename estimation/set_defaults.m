@@ -8,9 +8,9 @@ end
 % Log to use
 if ~isfield(settings, 'data')
     %     settings.data.name = 'Competition_Saturday';
-    settings.data.name = 'Competition_Sunday_Run1';
+%     settings.data.name = 'Competition_Sunday_Run1';
     %     settings.data.name = 'Competition_Sunday_Run2';
-    %     settings.data.name = 'LaserTest_Drive';
+    settings.data.name = 'LaserTest_Drive';
     settings.data.Ts = 0; % Start Time
     settings.data.Te = 150; % End Time
 end

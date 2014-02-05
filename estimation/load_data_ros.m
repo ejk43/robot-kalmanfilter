@@ -8,7 +8,7 @@ if isempty(data)
         data.imu = data.imu(settings.data.Ts < data.imu(:,1) & data.imu(:,1) < settings.data.Te, :);
         data.enc = data.enc(settings.data.Ts < data.enc(:,1) & data.enc(:,1) < settings.data.Te, :);
     end
-    [vel_lft, vel_rgt] = convertEncodersToWheelVelocity(data.enc(:,1), data.enc(:,2), data.enc(:,3));
+    [vel_lft, vel_rgt] = convertEncodersToWheelVelocity(data.enc(:,1), data.enc(:,2), data.enc(:,3), settings.robot);
     data.odom = [ data.enc(1:end,1), [0;vel_lft], [0;vel_rgt]];
 else
     if ~isfield(data, 'gps') && settings.kf.useGPS

@@ -1,6 +1,7 @@
 function [ velLeft, velRight ] = convertEncodersToWheelVelocity( time, encLeft, encRight,  settings)
 
 if nargin < 4
+    % Default settings for the CWRU Cutter robot if not supplied
     settings.tpm_right = 26500; % Ticks per meter
     settings.tpm_left= 27150; % Ticks per meter
 	settings.track_m = 0.55; % Track Width
