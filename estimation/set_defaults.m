@@ -52,9 +52,9 @@ if ~isfield(settings, 'sys')
     settings.sys.verr_r = 0.01;
     settings.sys.verr_l = 0.01;
     settings.sys.imubias = 0.00005;
-    settings.sys.scale_l = 0.00001;
-    settings.sys.scale_r = 0.00001;
-    settings.sys.scale_b = 0.00001;
+    settings.sys.scale_l = 0.000001;
+    settings.sys.scale_r = 0.000001;
+    settings.sys.scale_b = 0.000001;
 end
 
 % EKF Measurement Tuning (Standard Deviation)
@@ -98,11 +98,11 @@ end
 
 % Robot constants
 if ~isfield(settings, 'robot')
-    settings.robot.tpm_right = 26500; % Ticks per meter, Right Wheel
-    settings.robot.tpm_left= 27150; % Ticks per meter, Left Wheel
-    settings.robot.track_m = 0.55; % Track Width
+    settings.robot.tpm_right = 26500*1.5; % Ticks per meter, Right Wheel
+    settings.robot.tpm_left= 27150*1.5; % Ticks per meter, Left Wheel
+    settings.robot.track_m = 0.55*1.5; % Track Width
 %     settings.robot.off_gps = [0; 0]; % GPS offset in body frame
-        settings.robot.off_gps = [-0.45; 0]; % GPS offset in body frame
+    settings.robot.off_gps = [-0.45; 0]; % GPS offset in body frame
 end
 
 end
