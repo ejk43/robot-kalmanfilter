@@ -11,8 +11,8 @@ if ~isfield(settings, 'data')
 %     settings.data.name = 'Competition_Sunday_Run1';
     %     settings.data.name = 'Competition_Sunday_Run2';
     settings.data.name = 'LaserTest_Drive';
-    settings.data.Ts = 0; % Start Time
-    settings.data.Te = 150; % End Time
+    settings.data.Ts = -1; % Start Time
+    settings.data.Te = -1; % End Time
 end
 
 if ~isfield(settings, 'plot');
@@ -24,8 +24,8 @@ if ~isfield(settings, 'kf')
     settings.kf.useGPS = 1;
     settings.kf.useIMU = 1;
     settings.kf.useOdom = 1;
-    settings.kf.useWheelError = 0;
-    settings.kf.useSystemParams = 1;
+    settings.kf.useWheelError = 1;
+    settings.kf.useSystemParams = 0;
     
     settings.kf.smooth = 1;
 end
@@ -98,9 +98,9 @@ end
 
 % Robot constants
 if ~isfield(settings, 'robot')
-    settings.robot.tpm_right = 26500*1.5; % Ticks per meter, Right Wheel
-    settings.robot.tpm_left= 27150*1.5; % Ticks per meter, Left Wheel
-    settings.robot.track_m = 0.55*1.5; % Track Width
+    settings.robot.tpm_right = 26500; % Ticks per meter, Right Wheel
+    settings.robot.tpm_left= 27150; % Ticks per meter, Left Wheel
+    settings.robot.track_m = 0.55; % Track Width
 %     settings.robot.off_gps = [0; 0]; % GPS offset in body frame
     settings.robot.off_gps = [-0.45; 0]; % GPS offset in body frame
 end
