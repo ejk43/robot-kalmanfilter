@@ -50,12 +50,12 @@ if ~isfield(settings, 'meas')
     settings.meas.useIMU = 1;
     settings.meas.useOdom = 1;
     
-    settings.meas.useFault = 0;
-    settings.meas.useSystemParams = 1;
+    settings.meas.useFault = 1;
+    settings.meas.useSystemParams = 0;
     
-    settings.meas.scaleL = 0.8;
-    settings.meas.scaleR = 1.2;
-    settings.meas.scaleB = 1.05;
+    settings.meas.scaleL = 1;
+    settings.meas.scaleR = 1;
+    settings.meas.scaleB = 1;
 
     % faultTime is a m x 2 array. m = # of faults. col = [start, end]
     settings.meas.faultTime = [20 30; 35 45];
