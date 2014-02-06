@@ -7,33 +7,45 @@ end
 
 %% GPS Data
 figure(plotNum); plotNum = plotNum + 1;
-plot(traj.state(:,1), traj.state(:,2), 'b.', traj.gps(:,1), traj.gps(:,2), 'r.', data.gps(:,2), data.gps(:,3), 'ko');
+plot(data.gps(:,2), data.gps(:,3), 'ko', traj.state(:,1), traj.state(:,2), 'b.', traj.gps(:,1), traj.gps(:,2), 'r.');
 xlabel('X (m)'); ylabel('Y (m)');
 title('Robot Track and Measurements');
-legend('True', 'Perfect GPS', 'Downsampled Noisy GPS');
+legend('Downsampled Noisy GPS', 'True Robot Origin', 'Perfect GPS');
 axis square;
 
 %% IMU Data
 figure(plotNum); plotNum = plotNum + 1;
-plot(traj.t, traj.state(:,5), 'b.', traj.t, traj.imu, 'r.', data.imu(:,1), data.imu(:,2), 'ko');
+plot(data.imu(:,1), data.imu(:,2), 'ko', traj.t, traj.state(:,5), 'b.', traj.t, traj.imu, 'r.');
 xlabel('Time (s)'); ylabel('Angular Velocity (rad/s)');
 title('Imu Truth and Measurements')
-legend('True', 'Perfect IMU', 'Downsampled Noisy IMU');
+legend( 'Downsampled Noisy IMU', 'True', 'Perfect IMU');
 
 %% Odometry Data
 figure(plotNum); plotNum = plotNum + 1; px = [];
 px(1) = subplot(2,1,1);
-plot(traj.t, traj.odom(:,1), 'r.', data.odom(:,1), data.odom(:,2), 'ko');
+plot(data.odom(:,1), data.odom(:,2), 'ko', traj.t, traj.odom(:,1), 'r.');
 xlabel('Time (s)'); ylabel('Forward Velocity (m/s)');
 title('Left Wheel Odometry Measurements')
-legend('Perfect Odom', 'Downsampled Noisy Odom');
+legend('Downsampled Noisy Odom', 'Perfect Odom');
 px(2) = subplot(2,1,2);
-plot(traj.t, traj.odom(:,2), 'r.', data.odom(:,1), data.odom(:,3), 'ko');
+plot(data.odom(:,1), data.odom(:,3), 'ko', traj.t, traj.odom(:,2), 'r.');
 xlabel('Time (s)'); ylabel('Forward Velocity (m/s)');
 title('Right Wheel Odometry Measurements')
-legend('Perfect Odom', 'Downsampled Noisy Odom');
+legend('Downsampled Noisy Odom', 'Perfect Odom');
 linkaxes(px,'x');
 
+%% Ranger Data
+figure(plotNum); plotNum = plotNum + 1; px = [];
+nRanger = size(traj.range, 2); hold on;
+plot(traj.t, traj.range, '.')
+plot(data.range(:,1), data.range(:,2:end), 'ko', traj.t, traj.range, '.')
+xlabel('Time (s)'); ylabel('Distance (m)');
+names = cell(nRanger, 1);
+for ii = 1:nRanger
+    names(ii) = {['Ranger ' num2str(ii)]};
+end
+legend(names)
+title('Ranger Measurements')
 
 end
 
