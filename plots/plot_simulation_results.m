@@ -40,6 +40,7 @@ for ii = 1:size(hist.x,2)
     px(1) = subplot(2,1,1); hold on;
     plot(hist.t, x, 'b', hist.t, x+x_err, 'b:', hist.t, x-x_err, 'b:');
     plot(hist.t, x_rts, 'g', hist.t, x_rts+x_rts_err, 'g:', hist.t, x_rts-x_rts_err, 'g:');
+    plot(hist.t, state_true(:,ii), 'r');
     title([names{ii}]);
     xlabel('Time (s)'); ylabel('State');
     
