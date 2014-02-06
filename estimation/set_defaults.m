@@ -24,22 +24,11 @@ if ~isfield(settings, 'kf')
     settings.kf.useGPS = 1;
     settings.kf.useIMU = 1;
     settings.kf.useOdom = 1;
+    settings.kf.useRanger = 0;
     settings.kf.useWheelError = 1;
     settings.kf.useSystemParams = 0;
     
     settings.kf.smooth = 1;
-end
-
-if ~isfield(settings, 'fault')
-    % faultTime is a m x 2 array. m = # of faults. col = [start, end]
-    settings.fault.scaleTime = [0 0];
-    % faultMagn is a m x 3 array. m = # of faults. col = [scaleL, scaleR, scaleB]
-    settings.fault.scaleVal = [1 1 1];
-    
-    % faultTime is a m x 2 array. m = # of faults. col = [start, end]
-    settings.fault.slipTime = [0 0];
-    % faultMagn is a m x 2 array. m = # of faults. col = [left, right]
-    settings.fault.slipMagn = [0 0];
 end
 
 % EKF System Tuning (Standard Deviation)
@@ -63,6 +52,7 @@ if ~isfield(settings, 'std')
     settings.std.imu = 0.01;
     settings.std.enc_eps = 0.005;
     settings.std.enc_alp = 0.003;
+    settings.std.ranger = 0.1;
 end
 
 % Initial Covariance
@@ -95,7 +85,6 @@ if ~isfield(settings, 'init')
     settings.init.scale_b = 1;
 end
 
-
 % Robot constants
 if ~isfield(settings, 'robot')
     settings.robot.tpm_right = 26500; % Ticks per meter, Right Wheel
@@ -103,6 +92,12 @@ if ~isfield(settings, 'robot')
     settings.robot.track_m = 0.55; % Track Width
 %     settings.robot.off_gps = [0; 0]; % GPS offset in body frame
     settings.robot.off_gps = [-0.45; 0]; % GPS offset in body frame
+end
+
+% Environment Constants
+if ~isfield(settings, 'env')
+    % rangerCoords is a p x 2 array. p = # of rangers. col = [x, y]
+    settings.env.rangerCoords = [0, 0; 5, 5; 10, -5]; 
 end
 
 end

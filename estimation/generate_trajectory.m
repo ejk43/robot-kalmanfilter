@@ -39,11 +39,11 @@ end
 traj.state(:,6) = settings.meas.imubias * ones(nSamp, 1);
 
 % Add the wheel velocity error states
-if settings.meas.useFault
-    for fault = 1:size(settings.meas.faultTime,1)
-        times = settings.meas.faultTime(fault,:);
-        traj.state(times(1)<traj.t & traj.t<times(2), 7) = settings.meas.faultMagn(fault,1);
-        traj.state(times(1)<traj.t & traj.t<times(2), 8) = settings.meas.faultMagn(fault,2);
+if settings.fault.useFault
+    for fault = 1:size(settings.fault.faultTime,1)
+        times = settings.fault.faultTime(fault,:);
+        traj.state(times(1)<traj.t & traj.t<times(2), 7) = settings.fault.faultMagn(fault,1);
+        traj.state(times(1)<traj.t & traj.t<times(2), 8) = settings.fault.faultMagn(fault,2);
     end
 end
 
@@ -51,10 +51,10 @@ end
 traj.state(:,9)  = ones(nSamp, 1);
 traj.state(:,10) = ones(nSamp, 1);
 traj.state(:,11) = ones(nSamp, 1);
-if settings.meas.useSystemParams
-    traj.state(:,9)  = settings.meas.scaleL .* traj.state(:,9);
-    traj.state(:,10) = settings.meas.scaleR .* traj.state(:,10);
-    traj.state(:,11) = settings.meas.scaleB .* traj.state(:,11);
+if settings.fault.useSystemParams
+    traj.state(:,9)  = settings.fault.scaleL .* traj.state(:,9);
+    traj.state(:,10) = settings.fault.scaleR .* traj.state(:,10);
+    traj.state(:,11) = settings.fault.scaleB .* traj.state(:,11);
 end
 
 end

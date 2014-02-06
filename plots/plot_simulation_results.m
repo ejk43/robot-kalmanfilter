@@ -35,18 +35,24 @@ for ii = 1:size(hist.x,2)
     x_err = 3*sqrt(hist.P(:,ii,ii));
     x_rts = hist.x_rts(:,ii);
     x_rts_err = 3*sqrt(hist.P_rts(:,ii,ii));
+    x_true = state_true(:,ii);
+    if ii==3
+        x = (wrap(x,2*pi));
+        x_rts = (wrap(x_rts,2*pi));
+        x_true = (wrap(x_true,2*pi));
+    end
     
     figure(plotNum+ii-1); clf;
     px(1) = subplot(2,1,1); hold on;
     plot(hist.t, x, 'b', hist.t, x+x_err, 'b:', hist.t, x-x_err, 'b:');
     plot(hist.t, x_rts, 'g', hist.t, x_rts+x_rts_err, 'g:', hist.t, x_rts-x_rts_err, 'g:');
-    plot(hist.t, state_true(:,ii), 'r');
+    plot(hist.t, x_true, 'r');
     title([names{ii}]);
     xlabel('Time (s)'); ylabel('State');
     
     px(2) = subplot(2,1,2); hold on
-    err = state_true(:,ii) - x;
-    err_rts = state_true(:,ii) - x_rts;
+    err = x_true - x;
+    err_rts = x_true - x_rts;
     plot(hist.t, err, 'b', hist.t, x_err, 'b:', hist.t, -x_err, 'b:');
     plot(hist.t, err_rts, 'g', hist.t, x_rts_err, 'g:', hist.t, -x_rts_err, 'g:');
     xlabel('Time (s)'); ylabel('Error');

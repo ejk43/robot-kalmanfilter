@@ -67,6 +67,16 @@ if trajsettings.meas.useOdom
     data.odom(:,2:3) = interp1(traj.t, traj.odom, data.odom(:,1)) + odomnoise;
 end
 
+nRange = floor((te-ts)/ trajsettings.dt.ranger)+1;
+rangenoise = trajsettings.std.ranger*randn(nRange,3);
+if trajsettings.meas.useRanger
+    % Generate Imu Measurements
+    data.range = zeros(nRange, 4);
+    data.range(:,1) = ts:trajsettings.dt.ranger:te;
+    traj.range = h_ranger(traj.state', trajsettings.meas.rangerCoords)';
+    data.range(:,2:4) = interp1(traj.t, traj.range, data.range(:,1)) + rangenoise;
+end
+
 
 end
 

@@ -1,4 +1,4 @@
-function [settings, traj_settings] = config_sim_wheelerror_only
+function [settings, traj_settings] = config_sim_systemerror_only
 % Simulation: Wheel Errors Only
 % Set up the settings for a simulation trajectory with wheel errors
 
@@ -23,31 +23,34 @@ traj_settings.traj.vel_limit = 1;
 traj_settings.traj.omg_limit = 1;
 
 % Add faults
-traj_settings.meas.useFault = 0;
-traj_settings.meas.useSystemParams = 1;
-traj_settings.meas.scaleL = 0.8;
-traj_settings.meas.scaleR = 1.2;
-traj_settings.meas.scaleB = 1.05;
+traj_settings.fault.useFault = 0;
+traj_settings.fault.useSystemParams = 1;
+traj_settings.fault.scaleL = 0.8;
+traj_settings.fault.scaleR = 1.2;
+traj_settings.fault.scaleB = 1.05;
 % faultTime is a m x 2 array. m = # of faults. col = [start, end]
-traj_settings.meas.faultTime = [20 30; 35 45];
+traj_settings.fault.faultTime = [20 30; 35 45];
 % faultMagn is a m x 2 array. m = # of faults. col = [left, right]
-traj_settings.meas.faultMagn = [0.5 0; 0 0.5];
+traj_settings.fault.faultMagn = [0.5 0; 0 0.5];
 
 % Measurement Noise
 traj_settings.std.gps = 0.025;
 traj_settings.std.imu = 0.002;
 traj_settings.std.odom = 0.001;
+traj_settings.std.ranger = 0.1;
 
 % Measurement Rate
 traj_settings.dt.gps = 1/10;
 traj_settings.dt.imu = 1/25;
 traj_settings.dt.odom = 1/50;
+traj_settings.dt.ranger = 1/20;
 
-% Measurement
+% Measurement Generation
 traj_settings.meas.imubias = 0.02;
 traj_settings.meas.useGPS = 1;
 traj_settings.meas.useIMU = 1;
 traj_settings.meas.useOdom = 1;
+traj_settings.meas.useRanger = 1;
 
 
 %% Populate Kalman Filter settings
@@ -62,6 +65,7 @@ settings.kf.useIMU = 1;
 settings.kf.useOdom = 1;
 settings.kf.useWheelError = 0;
 settings.kf.useSystemParams = 1;
+settings.kf.useRanger = 0;
 
 % System Noise
 settings.sys.x = 0.01;

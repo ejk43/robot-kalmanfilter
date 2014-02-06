@@ -47,6 +47,7 @@ hist.Phi = zeros(nOdom, nStates, nStates);
 
 dt_gps = mean(diff(data.gps(:,1))); % Hack for timestep- we need to calculate in each loop
 dt_imu = mean(diff(data.imu(:,1))); % Hack for timestep- we need to calculate in each loop
+dt_range = mean(diff(data.range(:,1))); % Hack for timestep- we need to calculate in each loop
 for idx_odom = 2:nOdom
     % Calculate dt based on odometry
     dt = data.odom(idx_odom,1)-data.odom(idx_odom-1,1);
@@ -78,6 +79,14 @@ for idx_odom = 2:nOdom
         z_imu = data.imu(data.odom(idx_odom-1,1)<data.imu(:,1) & data.imu(:,1)<=data.odom(idx_odom,1), 2);
         if ~isempty(z_imu)
             [ x_post, P_post ] = ekf_meas_update_imu(x_post, P_post, z_imu, R.imu*dt_imu, dt_gps);
+        end
+    end
+    
+    % Ranger Measurement Update
+    if settings.kf.useRanger
+        z_range = data.range(data.odom(idx_odom-1,1)<data.range(:,1) & data.range(:,1)<=data.odom(idx_odom,1), 2:end)';
+        if ~isempty(z_range)
+            [ x_post, P_post ] = ekf_meas_update_ranger(x_post, P_post, z_range, R.range*dt_range, dt_range, settings.env.rangerCoords);
         end
     end
     
