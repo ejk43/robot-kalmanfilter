@@ -91,13 +91,13 @@ for idx_odom = 2:nOdom
     end
     
     % Pseudo update for forcing wheel velocity error = 0
-    if settings.kf.forceVelErr && settings.kf.useWheelError
+    if checkVelErrPseudoUpdate(settings, curr_time)
         z_velerr = [0; 0];
         [ x_post, P_post ] = ekf_pseudo_update_velerr(x_post, P_post, z_velerr, R.force_velerr*dt, settings);
     end
     
     % Pseudo update for forcing non-systematic velocity error = constant
-    if settings.kf.forceSysErr && settings.kf.useSystemParams
+    if checkSysErrPseudoUpdate(settings, curr_time)
         z_syserr = h_syserr(x, settings);
         [ x_post, P_post ] = ekf_pseudo_update_syserr(x_post, P_post, z_syserr, R.force_syserr*dt, settings);
     end

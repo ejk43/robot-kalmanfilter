@@ -33,6 +33,10 @@ if ~isfield(settings, 'kf')
     settings.kf.forceVelErr = 0; 
     settings.kf.forceSysErr = 0;
     
+    % Set time to force velocity errors 
+    settings.kf.forceVelErrTime = [];
+    settings.kf.forceSysErrTime = [];
+    
     settings.kf.smooth = 1;
 end
 
