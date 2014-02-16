@@ -1,5 +1,5 @@
 function [ hist, data, settings ] = process_robot_data(settings, data)
-%PROCESS_ROBOT_DATA 
+%PROCESS_ROBOT_DATA
 
 %% Set up the file path
 addpath('./../preprocessing');
@@ -88,6 +88,18 @@ for idx_odom = 2:nOdom
         if ~isempty(z_range)
             [ x_post, P_post ] = ekf_meas_update_ranger(x_post, P_post, z_range, R.range*dt_range, dt_range, settings.env.rangerCoords);
         end
+    end
+    
+    % Pseudo update for forcing wheel velocity error = 0
+    if settings.kf.forceVelErr && settings.kf.useWheelError
+        z_velerr = [0; 0];
+        [ x_post, P_post ] = ekf_pseudo_update_velerr(x_post, P_post, z_velerr, R.force_velerr*dt, settings);
+    end
+    
+    % Pseudo update for forcing non-systematic velocity error = constant
+    if settings.kf.forceSysErr && settings.kf.useSystemParams
+        z_syserr = h_syserr(x, settings);
+        [ x_post, P_post ] = ekf_pseudo_update_syserr(x_post, P_post, z_syserr, R.force_syserr*dt, settings);
     end
     
     x = x_post;

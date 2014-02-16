@@ -28,6 +28,11 @@ if ~isfield(settings, 'kf')
     settings.kf.useWheelError = 1;
     settings.kf.useSystemParams = 0;
     
+    % Use the coercive pseudo updates to force
+    % the parameter to zero
+    settings.kf.forceVelErr = 0; 
+    settings.kf.forceSysErr = 0;
+    
     settings.kf.smooth = 1;
 end
 
@@ -53,6 +58,9 @@ if ~isfield(settings, 'std')
     settings.std.enc_eps = 0.005;
     settings.std.enc_alp = 0.003;
     settings.std.ranger = 0.1;
+    
+    settings.std.force_velerr = 0.000001;
+    settings.std.force_syserr = 0.000001;
 end
 
 % Initial Covariance

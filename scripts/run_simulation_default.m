@@ -1,5 +1,6 @@
 
 clearvars;
+addpath('../estimation');
 
 %% Populate settings
 settings = set_defaults;

@@ -9,6 +9,9 @@ R.gps = diag([settings.std.gps^2, settings.std.gps^2]);
 R.imu = settings.std.imu^2;
 R.range = diag(settings.std.ranger^2*ones(size(settings.env.rangerCoords,1),1));
 
+R.force_velerr = settings.std.force_velerr;
+R.force_syserr = settings.std.force_syserr;
+
 %% Initial state, covariance, and system noise
 
 % Base Model
