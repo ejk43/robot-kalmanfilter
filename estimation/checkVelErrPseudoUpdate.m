@@ -7,7 +7,7 @@ if settings.kf.forceVelErr && settings.kf.useWheelError
     timevalid = settings.kf.forceVelErrTime;
     if isempty(timevalid)
         rval = true;
-    elseif any(timevalid(:,1)<ts & ts<timevalid(:,2))
+    elseif any(timevalid(:,1)<=ts & ts<timevalid(:,2))
         rval = true;
     end
 end
