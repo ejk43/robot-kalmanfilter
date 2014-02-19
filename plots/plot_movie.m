@@ -4,7 +4,7 @@ plotNum = 100;
 
 % Decimate GPS by this number, decimate the state according to GPS timestamps
 ndec = 2;
-pausetime = 0.1;
+pausetime = 0.05;
 state_data = hist.x;
 % state_data = hist.x_rts;
 time = data.gps(:,1);
@@ -27,7 +27,7 @@ off = settings.robot.off_gps;
 state_ds = interp1(hist.t, state, time);
 for idx= ndec:ndec:size(state_ds,1)
     h = figure(plotNum); clf; hold on;
-    [robot, leftarrow, rightarrow] = circle(state_ds(idx,:), 0.3);
+    [robot, leftarrow, rightarrow] = circle(state_ds(idx,:), 0.5);
     gps_est = [state_ds(idx_last:idx,1) + off(1)*cos(state_ds(idx_last:idx,3)) - off(2)*sin(state_ds(idx_last:idx,3)),...
         state_ds(idx_last:idx,2) + off(1)*sin(state_ds(idx_last:idx,3)) + off(2)*cos(state_ds(idx_last:idx,3))];
     plot([state_ds(idx_last:idx,1) data.gps(idx_last:idx,2)],...
