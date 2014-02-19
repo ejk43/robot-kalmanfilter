@@ -14,6 +14,7 @@ plot(hist.t, state_true(:,ii), 'r');
 title('Left Wheel Odometry Error');
 xlabel('Time (s)'); ylabel('Velocity (m/s)');
 grid on;
+ylim([-0.6 0.6]);
 px(2) = subplot(2,1,2); hold on;
 ii =8;
 plot(hist.t, hist.x(:,ii), 'b', hist.t, hist.x(:,ii)+3*sqrt(hist.P(:,ii,ii)), 'b:', hist.t, hist.x(:,ii)-3*sqrt(hist.P(:,ii,ii)), 'b:');
@@ -22,6 +23,7 @@ plot(hist.t, state_true(:,ii), 'r');
 title('Right Wheel Odometry Error');
 xlabel('Time (s)'); ylabel('Velocity (m/s)');
 grid on;
+ylim([-0.6 0.6]);
 linkaxes(px,'x');
 
 
