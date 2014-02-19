@@ -4,8 +4,8 @@ function plot_data_figures_plans( hist, plotNum )
 
 % state_true = hist.x_rts
 
-ts = 340;
-te = 405;
+ts = 0;
+te = 1000;
 
 idx = ts<hist.t & hist.t<te;
 
