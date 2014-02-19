@@ -25,7 +25,7 @@ if ~isfield(settings, 'kf')
     settings.kf.useIMU = 1;
     settings.kf.useOdom = 1;
     settings.kf.useRanger = 0;
-    settings.kf.useWheelError = 1;
+    settings.kf.useWheelError = 0;
     settings.kf.useSystemParams = 0;
     
     % Use the coercive pseudo updates to force

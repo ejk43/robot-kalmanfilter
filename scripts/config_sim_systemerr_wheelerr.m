@@ -1,4 +1,4 @@
-function [settings, traj_settings] = config_sim_systemerror_only
+function [settings, traj_settings] = config_sim_systemerr_wheelerr
 % Simulation: Wheel Errors Only
 % Set up the settings for a simulation trajectory with wheel errors
 
@@ -23,7 +23,7 @@ traj_settings.traj.vel_limit = 1;
 traj_settings.traj.omg_limit = 1;
 
 % Add faults
-traj_settings.fault.useFault = 0;
+traj_settings.fault.useFault = 1;
 traj_settings.fault.useSystemParams = 1;
 traj_settings.fault.scaleL = 0.8;
 traj_settings.fault.scaleR = 1.2;
