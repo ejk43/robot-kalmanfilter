@@ -51,7 +51,7 @@ if isfield(data, 'range')
     dt_range = mean(diff(data.range(:,1))); % Hack for timestep- we need to calculate in each loop
 end
 hist.x(1,:) = x;
-for idx_odom = 2:nOdom
+for idx_odom = 2:nOdom    
     % Calculate dt based on odometry
     dt = data.odom(idx_odom,1)-data.odom(idx_odom-1,1);
     curr_time = data.odom(idx_odom,1);

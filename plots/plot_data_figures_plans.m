@@ -31,6 +31,9 @@ grid on;
 ylim([-0.5 1]);
 linkaxes(px,'x');
 
+scale1 = 1/0.9;
+scale2 = 1/1.2;
+scale3 = 1/1.1;
 
 figure(plotNum); plotNum=plotNum+1; clf;
 px = [];
