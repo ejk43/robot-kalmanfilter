@@ -30,26 +30,25 @@ for ii = 1:nRuns
     hist_idx = (ii-1)*nSims+1 : ((ii-1)*nSims+nSims);
     
     state = 9;
+    figure(plotNum); plotNum = plotNum + 1;
     plot_montecarlo_state( all_hist(hist_idx), traj, state, plotNum );
-    plotNum = plotNum + 1;
     title([names{state} ' Error, Measurement Settings ' num2str(ii)]);
     xlabel('Time (s)');
     ylabel('Scale Factor Error from Truth')
     
     state = 10;
+    figure(plotNum); plotNum = plotNum + 1;
     plot_montecarlo_state( all_hist(hist_idx), traj, state, plotNum );
-    plotNum = plotNum + 1;
     title([names{state} ' Error, Measurement Settings ' num2str(ii)]);
     xlabel('Time (s)');
     ylabel('Scale Factor Error from Truth')
     
     state = 11;
+    figure(plotNum); plotNum = plotNum + 1;
     plot_montecarlo_state( all_hist(hist_idx), traj, state, plotNum );
-    plotNum = plotNum + 1;
     title([names{state} ' Error, Measurement Settings ' num2str(ii)]);
     xlabel('Time (s)');
     ylabel('Scale Factor Error from Truth')
-
 end
 
 

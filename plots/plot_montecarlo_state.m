@@ -13,7 +13,7 @@ end
 
 state_true = interp1(traj.t, traj.state(:,state), time);
 
-figure(fig);
+% figure(fig);
 plot(time, repmat(state_true, 1, nSims) - state_data, '.-');
 
 end
