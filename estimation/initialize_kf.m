@@ -8,6 +8,7 @@ end
 R.gps = diag([settings.std.gps^2, settings.std.gps^2]);
 R.imu = settings.std.imu^2;
 R.range = diag(settings.std.ranger^2*ones(size(settings.env.rangerCoords,1),1));
+R.velocity = diag([settings.std.velocity^2, settings.std.velocity^2]);
 
 R.force_velerr = settings.std.force_velerr;
 R.force_syserr = settings.std.force_syserr;

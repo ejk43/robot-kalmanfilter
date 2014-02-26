@@ -1,4 +1,4 @@
-function [ ] = plot_montecarlo_errors_3d( all_errors, all_settings, all_traj_settings, gps, imu, plotStates, plotNum)
+function [ ] = plot_montecarlo_errors_3d_test2( all_errors, all_settings, all_traj_settings, gps, vel, plotStates, plotNum)
 
 [nRuns, nSims] = size(all_settings);
 nStates = size(all_errors(1,1).rms, 1);
@@ -10,7 +10,7 @@ names = getNames();
 values_to_store = 1:max(min(5,nSims-2),1);
 
 nX = length(gps.val);
-nY = length(imu.val);
+nY = length(vel.val);
 
 rms_best = zeros(nX, nY, nStates);
 rms_median = zeros(nX, nY, nStates);
@@ -44,10 +44,10 @@ for kk=1:nPlots
 %     stem3(x.val, y.val, squeeze(rms_mean(:, :, state)));
     bar3(squeeze(rms_best(:, :, state)));
     bar3(squeeze(rms_median(:, :, state)));
-    set(gca(gcf), 'xticklabel', gps.val, 'yticklabel', imu.val)
+    set(gca(gcf), 'xticklabel', gps.val, 'yticklabel', vel.val)
     title(['Monte-Carlo Results: ' names{state}]);
     xlabel('Simulated GPS \sigma');
-    ylabel('Simulated Gyro \sigma');
+    ylabel('Simulated Velocity \sigma');
 end
 
 end

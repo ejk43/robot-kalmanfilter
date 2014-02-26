@@ -47,5 +47,19 @@ end
 legend(names)
 title('Ranger Measurements')
 
+%% Visual Odometry Data
+figure(plotNum); plotNum = plotNum + 1; px = [];
+px(1) = subplot(2,1,1);
+plot(data.velocity(:,1), data.velocity(:,2), 'ko', traj.t, traj.velocity(:,1), 'r.');
+xlabel('Time (s)'); ylabel('Forward Velocity (m/s)');
+title('Forward Velocity Measurements')
+legend('Downsampled Noisy Velocity', 'Perfect Velocity');
+px(2) = subplot(2,1,2);
+plot(data.velocity(:,1), data.velocity(:,3), 'ko', traj.t, traj.velocity(:,2), 'r.');
+xlabel('Time (s)'); ylabel('Angular Velocity (rad/s)');
+title('Angular Velocity Measurements')
+legend('Downsampled Noisy Velocity', 'Perfect Velocity');
+linkaxes(px,'x');
+
 end
 

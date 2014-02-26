@@ -33,6 +33,7 @@ if ~isfield(traj_settings, 'std')
     traj_settings.std.imu = 0.002;
     traj_settings.std.odom = 0.001;
     traj_settings.std.ranger = 0.1;
+    traj_settings.std.velocity = 0.005;
 end
 
 if ~isfield(traj_settings, 'dt')
@@ -42,6 +43,7 @@ if ~isfield(traj_settings, 'dt')
     traj_settings.dt.imu = 1/25;
     traj_settings.dt.odom = 1/50;
     traj_settings.dt.ranger = 1/20;
+    traj_settings.dt.velocity = 1/10;
 end
 
 if ~isfield(traj_settings, 'meas')
@@ -52,6 +54,7 @@ if ~isfield(traj_settings, 'meas')
     traj_settings.meas.useIMU = 1;
     traj_settings.meas.useOdom = 1;
     traj_settings.meas.useRanger = 1;
+    traj_settings.meas.useVelocity = 1;
     % rangerCoords is a p x 2 array. p = # of rangers. col = [x, y]
     traj_settings.meas.rangerCoords = [0, 0; 5, 5; 10, -5];
     

@@ -25,6 +25,7 @@ if ~isfield(settings, 'kf')
     settings.kf.useIMU = 1;
     settings.kf.useOdom = 1;
     settings.kf.useRanger = 0;
+    settings.kf.useVelocity = 1;
     settings.kf.useWheelError = 0;
     settings.kf.useSystemParams = 0;
     
@@ -62,6 +63,7 @@ if ~isfield(settings, 'std')
     settings.std.enc_eps = 0.005;
     settings.std.enc_alp = 0.003;
     settings.std.ranger = 0.1;
+    settings.std.velocity = 0.01;
     
     settings.std.force_velerr = 0.000001;
     settings.std.force_syserr = 0.000001;

@@ -77,6 +77,15 @@ if trajsettings.meas.useRanger
     data.range(:,2:4) = interp1(traj.t, traj.range, data.range(:,1)) + rangenoise;
 end
 
+nVel = floor((te-ts)/ trajsettings.dt.velocity)+1;
+velnoise = trajsettings.std.velocity*randn(nVel,2);
+if trajsettings.meas.useVelocity
+    % Generate "Visual Odometry" velocity Measurements
+    data.velocity = zeros(nVel, 2);
+    data.velocity(:,1) = ts:trajsettings.dt.velocity:te;
+    traj.velocity = h_velocity(traj.state')';
+    data.velocity(:,2:3) = interp1(traj.t, traj.velocity, data.velocity(:,1)) + velnoise;
+end
 
 end
 

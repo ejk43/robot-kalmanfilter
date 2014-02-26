@@ -50,6 +50,9 @@ dt_imu = mean(diff(data.imu(:,1))); % Hack for timestep- we need to calculate in
 if isfield(data, 'range')
     dt_range = mean(diff(data.range(:,1))); % Hack for timestep- we need to calculate in each loop
 end
+if isfield(data, 'velocity')
+    dt_velocity = mean(diff(data.velocity(:,1))); % Hack for timestep- we need to calculate in each loop
+end
 hist.x(1,:) = x;
 for idx_odom = 2:nOdom    
     % Calculate dt based on odometry
@@ -90,6 +93,14 @@ for idx_odom = 2:nOdom
         z_range = data.range(data.odom(idx_odom-1,1)<data.range(:,1) & data.range(:,1)<=data.odom(idx_odom,1), 2:end)';
         if ~isempty(z_range)
             [ x_post, P_post ] = ekf_meas_update_ranger(x_post, P_post, z_range, R.range*dt_range, dt_range, settings.env.rangerCoords);
+        end
+    end
+    
+    % Visual Odometry Measurement Update
+    if settings.kf.useVelocity
+        z_velocity = data.velocity(data.odom(idx_odom-1,1)<data.velocity(:,1) & data.velocity(:,1)<=data.odom(idx_odom,1), 2:3)';
+        if ~isempty(z_velocity)
+            [ x_post, P_post ] = ekf_meas_update_velocity(x_post, P_post, z_velocity, R.velocity*dt_velocity, dt_velocity);
         end
     end
     

@@ -1,4 +1,4 @@
-function [ ] = plot_montecarlo_errors_3d( all_errors, all_settings, all_traj_settings, gps, imu, plotStates, plotNum)
+function [ ] = plot_montecarlo_errors_3d_test1( all_errors, all_settings, all_traj_settings, gps, imu, plotStates, plotNum)
 
 [nRuns, nSims] = size(all_settings);
 nStates = size(all_errors(1,1).rms, 1);
