@@ -12,7 +12,8 @@ values_to_store = 1:max(min(5,nSims-2),1);
 nX = length(x.val);
 nY = length(y.val);
 
-rms_mean = zeros(nX, nY, nStates);
+rms_best = zeros(nX, nY, nStates);
+rms_median = zeros(nX, nY, nStates);
 ii = 1;
 for ix=1:nX
     for iy=1:nY
@@ -23,9 +24,11 @@ for ix=1:nX
             rms(:,jj) = all_errors(ii,jj).rms;
         end
         
+        rms_median(ix, iy, :) = median(rms,2);
+        
         for jj=1:nStates
             rms_sort = sort(rms(jj,:));
-            rms_mean(ix, iy, jj) = mean(rms_sort(values_to_store));
+            rms_best(ix, iy, jj) = mean(rms_sort(values_to_store));
         end
         
         ii=ii+1;
@@ -39,7 +42,8 @@ for kk=1:nPlots
     state = plotStates(kk);
         subplot(1, nPlots, kk);
 %     stem3(x.val, y.val, squeeze(rms_mean(:, :, state)));
-    bar3(squeeze(rms_mean(:, :, state)));
+    bar3(squeeze(rms_best(:, :, state)));
+    bar3(squeeze(rms_median(:, :, state)));
     set(gca(gcf), 'xticklabel', x.val, 'yticklabel', y.val)
     title(['Monte-Carlo Results: ' names{state}]);
     xlabel('Simulated GPS \sigma');
