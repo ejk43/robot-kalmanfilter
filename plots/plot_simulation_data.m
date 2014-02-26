@@ -35,7 +35,7 @@ legend('Downsampled Noisy Odom', 'Perfect Odom');
 linkaxes(px,'x');
 
 %% Ranger Data
-figure(plotNum); plotNum = plotNum + 1; px = [];
+figure(plotNum); plotNum = plotNum + 1; clf; px = [];
 nRanger = size(traj.range, 2); hold on;
 plot(traj.t, traj.range, '.')
 plot(data.range(:,1), data.range(:,2:end), 'ko', traj.t, traj.range, '.')

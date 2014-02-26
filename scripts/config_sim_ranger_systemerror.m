@@ -1,4 +1,4 @@
-function [settings, traj_settings] = config_montecarlo_test2
+function [settings, traj_settings] = config_sim_ranger_systemerror
 % Simulation: Wheel Errors Only
 % Set up the settings for a simulation trajectory with wheel errors
 
@@ -37,15 +37,13 @@ traj_settings.fault.faultMagn = [0.5 0; 0 0.5];
 traj_settings.std.gps = 0.025;
 traj_settings.std.imu = 0.002;
 traj_settings.std.odom = 0.001;
-traj_settings.std.ranger = 0.01;
-traj_settings.std.velocity = 0.001;
+traj_settings.std.ranger = 0.05;
 
 % Measurement Rate
 traj_settings.dt.gps = 1/10;
 traj_settings.dt.imu = 1/25;
 traj_settings.dt.odom = 1/50;
 traj_settings.dt.ranger = 1/20;
-traj_settings.dt.velocity = 1/5;
 
 % Measurement Generation
 traj_settings.meas.imubias = 0.02;
@@ -53,7 +51,6 @@ traj_settings.meas.useGPS = 1;
 traj_settings.meas.useIMU = 1;
 traj_settings.meas.useOdom = 1;
 traj_settings.meas.useRanger = 1;
-traj_settings.meas.useVelocity = 1;
 traj_settings.meas.rangerCoords = [0, 0; 5, 5; 10, -5];
 
 
@@ -62,15 +59,16 @@ settings = set_defaults();
 
 % Robot GPS offset
 settings.robot.off_gps = [-0.45; 0]; % GPS offset in body frame
+settings.env.rangerCoords = [0, 0; 5, 5; 10, -5];
 
 % KF Settings
-settings.kf.useGPS = 1;
-settings.kf.useIMU = 0;
+settings.kf.useGPS = 0;
+settings.kf.useIMU = 1;
 settings.kf.useOdom = 1;
+settings.kf.useRanger = 1;
+settings.kf.useVelocity = 0;
 settings.kf.useWheelError = 1;
 settings.kf.useSystemParams = 1;
-settings.kf.useRanger = 0;
-settings.kf.useVelocity = 1;
 
 settings.kf.forceVelErr = 1;
 settings.kf.forceSysErr = 0;
@@ -88,8 +86,7 @@ settings.std.gps = 0.05;
 settings.std.imu = 0.01;
 settings.std.enc_eps = 0.005;
 settings.std.enc_alp = 0.003;
-settings.std.ranger = 0.01;
-settings.std.velocity = 0.004;
+settings.std.ranger = 0.1;
 
 % Initial Covariance
 settings.cov.x = 100;
