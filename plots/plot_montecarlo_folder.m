@@ -33,6 +33,8 @@ for ii = 1:nFiles
     title([names{state} ' Error, GPS \sigma =  ' num2str(gpsnoise) ', IMU \sigma = ' num2str(imunoise)]);
     xlabel('Time (s)');
     ylabel('Error')
+    
+    clear run_hist run_data run_settings run_traj_settings traj curr_run
 end
 
 end
