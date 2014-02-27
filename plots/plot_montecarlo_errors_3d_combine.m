@@ -7,7 +7,7 @@ nStates = size(all_errors(1,1).rms, 1);
 nPlots = length(plotStates);
 names = getNames();
 
-values_to_store = 1:max(min(5,nSims-2),1);
+values_to_store = 1:max(min(15,nSims-2),1);
 
 nX = length(gps.val);
 nY = length(imu.val);
@@ -37,19 +37,23 @@ end
 
 
 %     figure(plotNum); plotNum = plotNum+1; clf; hold on;
-    figure(plotNum); plotNum = plotNum+1; clf;
-for kk=1:nPlots
-    state = plotStates(kk);
-        subplot(1, nPlots, kk);
-%     stem3(x.val, y.val, squeeze(rms_mean(:, :, state)));
-    bar3(squeeze(rms_best(:, :, state)));
-    bar3(squeeze(rms_median(:, :, state)));
-    set(gca(gcf), 'xticklabel', gps.val, 'yticklabel', imu.val)
-    title(['Monte-Carlo Results: ' names{state}]);
-    xlabel(['Simulated ' names_meas{1} ' \sigma']);
-    ylabel(['Simulated ' names_meas{2} ' \sigma']);
-    zlim([0 0.1])
-end
+figure(plotNum); plotNum = plotNum+1; clf;
+subplot(1, 2, 1);
+bar3((rms_best(:,:,9) + rms_best(:,:,10))./2);
+set(gca(gcf), 'xticklabel', gps.val, 'yticklabel', imu.val)
+title(['Monte-Carlo Results: Ticks Per Meter (Mean of Left/Right Wheel)']);
+xlabel(['Simulated ' names_meas{1} ' \sigma']);
+ylabel(['Simulated ' names_meas{2} ' \sigma']);
+zlim([0 0.1])
+
+subplot(1, 2, 2);
+bar3(rms_best(:,:,11));
+set(gca(gcf), 'xticklabel', gps.val, 'yticklabel', imu.val)
+title(['Monte-Carlo Results: ' names{11}]);
+xlabel(['Simulated ' names_meas{1} ' \sigma']);
+ylabel(['Simulated ' names_meas{2} ' \sigma']);
+zlim([0 0.1])
+    
 
 end
 

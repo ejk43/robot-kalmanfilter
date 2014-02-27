@@ -14,13 +14,13 @@ filename = fullfile(outputfolder, name);
 % rng(sd);
 
 gps.min = 0.05;
-gps.max = 0.5;
-gps.num = 5;
+gps.max = 1;
+gps.num = 6;
 gps.val = linspace(gps.min, gps.max, gps.num)';
 
 vel.min = 0.001;
-vel.max = 0.1;
-vel.num = 5;
+vel.max = 0.5;
+vel.num = 8;
 vel.val = linspace(vel.min, vel.max, vel.num)';
 
 % nRuns = 20;

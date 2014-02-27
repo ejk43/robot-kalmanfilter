@@ -5,7 +5,7 @@
 clearvars
 addpath('..\util\progressbar');
 
-outputfolder = 'H:\data\mower\gps_velocity';
+outputfolder = 'H:\data\mower\ranger_imu';
 name = 'data_02_25_2014_errors.mat';
 filename = fullfile(outputfolder, name);
 
@@ -13,21 +13,21 @@ filename = fullfile(outputfolder, name);
 % sdRun = 510405;
 % rng(sd);
 
-ranger.min = 0.05;
+ranger.min = 0.01;
 ranger.max = 0.5;
-ranger.num = 2;
+ranger.num = 5;
 ranger.val = linspace(ranger.min, ranger.max, ranger.num)';
 
 imu.min = 0.01;
 imu.max = 0.5;
-imu.num = 2;
+imu.num = 5;
 imu.val = linspace(imu.min, imu.max, imu.num)';
 
 % nRuns = 20;
 nRange = size(ranger.val,1);
 nIMU = size(imu.val,1);
 nRuns = nRange * nIMU;
-nSims = 3;
+nSims = 50;
 
 %% Set up configuration
 [settings, traj_settings] = config_montecarlo_test3;

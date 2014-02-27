@@ -5,7 +5,7 @@
 clearvars
 addpath('..\util\progressbar');
 
-outputfolder = 'H:\data\mower\errors';
+outputfolder = 'H:\data\mower\gps_imu';
 name = 'data_02_25_2014_errors.mat';
 filename = fullfile(outputfolder, name);
 
@@ -14,13 +14,13 @@ filename = fullfile(outputfolder, name);
 % rng(sd);
 
 gps.min = 0.05;
-gps.max = 0.5;
-gps.num = 5;
+gps.max = 1;
+gps.num = 6;
 gps.val = linspace(gps.min, gps.max, gps.num)';
 
 imu.min = 0.01;
-imu.max = 0.5;
-imu.num = 5;
+imu.max = 1;
+imu.num = 6;
 imu.val = linspace(imu.min, imu.max, imu.num)';
 
 % nRuns = 20;
@@ -86,8 +86,8 @@ for i_gps = 1:nGPS
         %     traj_settings.std.ranger = 0.01 + 0.9*randvals(1);
         
         % Measurement Noise in Kalman Filter
-        settings.std.gps = traj_settings.std.gps*2;
-        settings.std.imu = traj_settings.std.imu*2;
+        settings.std.gps = traj_settings.std.gps*3;
+        settings.std.imu = traj_settings.std.imu*3;
         
         for jj = 1:nSims
             settings.sys = noise_settings(jj, 1);
@@ -132,7 +132,7 @@ end
 save(getValidFilename(filename),'all_errors','all_traj_settings','all_settings', 'gps', 'imu');
 
 %% Plots
-plot_montecarlo_errors(all_errors, all_settings, all_traj_settings, [9, 10, 11], 100);
+% plot_montecarlo_errors(all_errors, all_settings, all_traj_settings, [9, 10, 11], 100);
 %%
 % plot_montecarlo_errors_3d(all_errors, all_settings, all_traj_settings, gps, imu, [9:11], 200);
 measurement_names = {'GPS', 'Gyro'};
